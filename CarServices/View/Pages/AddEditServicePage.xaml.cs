@@ -34,11 +34,48 @@ namespace CarServices.View.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Image| *.png; *.jpg; *.jpeg";
+            try
+
+            {
+                OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image |*.png; *.jpg; *.jpeg";
             if (ofd.ShowDialog() == true)
             {
-                ImageService.Source = (ImageSource)new ImageSourceConverter() .ConvertFrom(_mainImageData);
+                _mainImageData = File.ReadAllBytes(ofd.FileName);
+                ImageService.Source = (ImageSource)new ImageSourceConverter()
+                    .ConvertFrom(_mainImageData);
+            }
+
+            string newfilename = "/Assets/Images/";
+            string appFolderPath = Directory.GetCurrentDirectory();
+            appFolderPath = appFolderPath.Replace("\\bin\\Debug", "");
+            string imageName = System.IO.Path.GetFileName(ofd.FileName);
+            newfilename = appFolderPath + newfilename + imageName;
+            if (!File.Exists(ofd.FileName))
+            {
+                File.Copy(ofd.FileName, newfilename);
+            }
+            
+
+          
+                ServicePhoto obj = new ServicePhoto
+                {
+                    PhotoPath = $"Images/{System.IO.Path.GetFileName(ofd.FileName)}",
+                    
+                };
+
+                db.context.ServicePhotoes.Add(obj);
+                db.context.SaveChanges();
+
+                _currentService.MainImagePath = obj.ID;
+
+
+
+
+            }
+            catch
+            {
+                MessageBox.Show("Критический сбор в работе приложения:", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -49,7 +86,11 @@ namespace CarServices.View.Pages
                 Service service = new Service
                 {
                     Title = TBoxTitle.Text,
-                    Cost = decimal.Parse(TBoxCost.Text);
+                    Cost = decimal.Parse(TBoxCost.Text),
+                    DurationInSeconds = int.Parse(TBoxDuration.Text)*60,
+                    Description= TBoxDescription.Text,
+                    Discount = string.IsNullOrWhiteSpace(TBoxDiscount.Text)? 0: int.Parse(TBoxDiscount.Text)/100,
+                   
                 };
             }
         }

@@ -12,8 +12,14 @@
         <StackPanel Background="White">
             <TextBlock >Название</TextBlock>
             <TextBox Background="LightGray" x:Name="TBoxTitle"></TextBox>
+            <TextBlock >Описание</TextBlock>
+            <TextBox Background="LightGray" x:Name="TBoxDescription"></TextBox>
+            <TextBlock >Продолжительность</TextBlock>
+            <TextBox Background="LightGray" x:Name="TBoxDuration"></TextBox>
             <TextBlock >Цена</TextBlock>
             <TextBox Background="LightGray" x:Name="TBoxCost">.Руб</TextBox>
+             <TextBlock >Скидка</TextBlock>
+            <TextBox Background="LightGray" x:Name="TBoxDiscount">.Руб</TextBox>
             <TextBlock >Изображение</TextBlock>
             <Image x:Name="ImageService" ></Image>
             <Button x:Name="knop" Click="Button_Click">Выбрать</Button>
