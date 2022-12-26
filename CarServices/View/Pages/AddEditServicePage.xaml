@@ -10,7 +10,15 @@
 
     <Grid>
         <StackPanel Background="White">
-            <TextBlock>Название</TextBlock></StackPanel>
+            <TextBlock >Название</TextBlock>
+            <TextBox Background="LightGray" x:Name="TBoxTitle"></TextBox>
+            <TextBlock >Цена</TextBlock>
+            <TextBox Background="LightGray" x:Name="TBoxCost">.Руб</TextBox>
+            <TextBlock >Изображение</TextBlock>
+            <Image x:Name="ImageService" ></Image>
+            <Button x:Name="knop" Click="Button_Click">Выбрать</Button>
+            <Button x:Name="Save" Click="Save_Click">Сохранить</Button>
+        </StackPanel>
         
     </Grid>
 </Page>
